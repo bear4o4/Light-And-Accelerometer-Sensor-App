@@ -32,14 +32,12 @@ public class Light extends AppCompatActivity implements SensorEventListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_light);
 
-        // Initialize views
-        imageView = findViewById(R.id.imageView2); // Use the single ImageView
+        imageView = findViewById(R.id.imageView2);
         nextButton = findViewById(R.id.nextbutton);
 
-        // Set default image (solar panel)
+
         imageView.setImageResource(R.drawable.solarpanel);
 
-        // Initialize SensorManager and Light Sensor
         sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         lightSensor = sensorManager.getDefaultSensor(Sensor.TYPE_LIGHT);
 
@@ -47,7 +45,6 @@ public class Light extends AppCompatActivity implements SensorEventListener {
             imageView.setImageResource(R.drawable.solarpanel);
         }
 
-        // Set up the next button to navigate to another activity
         nextButton.setOnClickListener(v -> {
             Intent intent = new Intent(Light.this, Face.class);
             startActivity(intent);
@@ -76,28 +73,11 @@ public class Light extends AppCompatActivity implements SensorEventListener {
             } else if (lightLevel <= 4000) {
                 imageView.setImageResource(R.drawable.light7);
             }  else {
-                imageView.setImageResource(R.drawable.light8); // Highly lit bulb
+                imageView.setImageResource(R.drawable.light8);
             }
         }
     }
     @Override
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
-        // No specific actions required
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        if (lightSensor != null) {
-            sensorManager.registerListener(this, lightSensor, SensorManager.SENSOR_DELAY_NORMAL);
-        }
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        if (lightSensor != null) {
-            sensorManager.unregisterListener(this);
-        }
     }
 }
